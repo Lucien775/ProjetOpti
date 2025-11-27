@@ -46,7 +46,7 @@ int main(){
 
     double alpha = 0.1;
     double epsilon = 10e-6;
-    vector<double> x_init(0.0,0.0);
+    std::vector<double> x_init = {3.0, 5.0};
 
 
     DirDescenteRealisable d;
@@ -58,8 +58,6 @@ int main(){
     cout << "Résultat de la minimisation de la fonction 1 : " << endl;
     for (double i : res)
     	cout << i << endl;
-
-
 
     return 0;
 }

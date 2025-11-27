@@ -20,9 +20,6 @@ public :
             v = -v;
         return g;
     }
-
-
-
 };
 
 

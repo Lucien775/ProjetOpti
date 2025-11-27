@@ -5,23 +5,23 @@
 using namespace std;
 
 class IFonction{
-
-    public:
-    size_t dimension;
-    virtual double result(  vector<double> x) = 0;
-    virtual vector<double> gradient( vector<double> x) = 0;
+public:
+    virtual ~IFonction() = default;
+    virtual double result(const vector<double>& x) const = 0;
+    virtual vector<double> gradient(const vector<double>& x) const = 0;
+    virtual size_t dimension() const = 0;
 };
 
 class Fonction1 : public IFonction{
 public:
     //constructeur
-    Fonction1(){}
-    ~Fonction1(){}
-    size_t dimension = 2;
+    Fonction1() = default;
 
-    double result(  vector<double> x) override{
+    size_t dimension() const override {return 2;}
+
+    double result(const vector<double>& x) const override{
         double r = 0.0;
-        if(x.size() != dimension){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
@@ -31,9 +31,9 @@ public:
         }
     }
 
-    vector<double> gradient( vector<double> x){
+    vector<double> gradient(const vector<double>& x) const override{
         vector<double> g;
-        if(x.size() != dimension){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
         }
@@ -48,13 +48,13 @@ public:
 class Fonction2 : public IFonction{
 public:
     //constructeur
-    Fonction2(){}
-    ~Fonction2(){}
-    size_t dimension = 3;
+    Fonction2() = default;
 
-    double result(  vector<double> x) override{
+    size_t dimension() const override {return 3;}
+
+    double result(const vector<double>& x) const override{
         double r = 0.0;
-        if(x.size() != dimension){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
@@ -64,10 +64,10 @@ public:
         }
     }
 
-    vector<double> gradient( vector<double> x){
+    vector<double> gradient(const vector<double>& x) const override{
         vector<double> g;
-        if(x.size() != dimension){
-            cout<<"Erreur de dimension"<<endl;
+        if(x.size() != dimension()){
+            cout<<"Erreur"<<endl;
             return g;
         }
         else{
@@ -80,16 +80,16 @@ public:
 };
 
 class Fonction3 : public IFonction{
-    //constructeur
 public:
-    Fonction3(){}
-    ~Fonction3(){}
-    size_t dimension = 2;
+    //constructeur
+    Fonction3() = default;
 
-    double result(  vector<double> x) override{
+    size_t dimension() const override {return 2;}
+
+    double result(const vector<double>& x) const override{
         double r = 0.0;
-        if(x.size() != dimension){
-            cout<<"Erreur de dimension"<<endl;
+        if(x.size() != dimension()){
+            cout<<"Erreur"<<endl;
             return 0.0;
         }
         else{
@@ -98,20 +98,21 @@ public:
         }
     }
 
-    vector<double> gradient( vector<double> x){
+    vector<double> gradient(const vector<double>& x) const override{
         vector<double> g;
-        if(x.size() != dimension){
-            cout<<"Erreur de dimension"<<endl;
+        if(x.size() != dimension()){
+            cout<<"Erreur"<<endl;
             return g;
         }
         else{
             g.push_back((-2)* (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] )   );
             g.push_back( 200 * ( x[1] - x[0]*x[0] ) );
-
+            g.push_back(6*x[2]);
             return g;
         }
     }
 };
+
 
 /*
 class IndexOutOfBoundsException : public exception{
