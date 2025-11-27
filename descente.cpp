@@ -1,27 +1,24 @@
 #include <iostream>
+#include <vector>
+
+#include "function.cpp"
+
 
 using namespace std;
 
 class DirDescenteRealisable{
-
-private : 
-    std::vector<double> x_init;
-    Fonction f;
-
 public : 
 
-    DirDescenteRealisable(){};
-
-    DirDescenteRealisable(vector<double> pointInit, Fonction fObjective){
-        this->x_init = pointInit;
-        this->f = fObjective;
-    };
+    DirDescenteRealisable() = default;
 
     ~DirDescenteRealisable() = default ; 
 
-    vector<double> Direction(vector<double> xk, Fonction f){
+    vector<double> Direction(vector<double> xk, IFonction& f){
 
-        return -f.gradient(xk);
+        std::vector<double> g = f.gradient(xk);
+        for(double v : g)
+            v = -v;
+        return g;
     }
 
 

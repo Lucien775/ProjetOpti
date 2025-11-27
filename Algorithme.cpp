@@ -1,25 +1,26 @@
 #include <stdlib.h>
+#include "descente.cpp"
 
 class Algorithme
 {
 private:
-	IFunction& f;
+	IFonction& f;
 	DirDescenteRealisable directionMethod;
 	double alpha;
 	double epsilon;
 public:
-	Algorithme(IFunction& func,DirDescenteRealisable dir,double a,double e): 
+	Algorithme(IFonction& func,DirDescenteRealisable dir,double a,double e): 
 		f(func), directionMethod(dir), alpha(a), epsilon(e) {}
 
-	std::vector<double> minimize(std::vector<double>x0) const
+	std::vector<double> minimize(std::vector<double>x0) 
 	{
 		std::vector<double> x = x0;
 		while (norm(f.gradient(x)) > epsilon)
 		{
-			std::vector<char> d = directionMethod.Direction(x);
+			std::vector<double> d = directionMethod.Direction(x, f);
 			double lambda = alpha;
 
-			for (size_t i = 0; i < x.size; ++i)
+			for (size_t i = 0; i < x.size(); ++i)
 			{
 				x[i] += lambda * d[i];
 			}
@@ -48,17 +49,15 @@ int main(){
     vector<double> x_init(0.0,0.0);
 
 
-    DirDescenteRealisable d1(x_init, f1);
+    DirDescenteRealisable d;
 
-    DirDescenteRealisable d2(x_init, f2);
-
-    DirDescenteRealisable d3(x_init, f3);
-
-    Algorithme algo(f1, d1, alpha, epsilon);
+    Algorithme algo(f1, d, alpha, epsilon);
 
     vector<double> res = algo.minimize(x_init);
 
-    cout << "Résultat de la minimisation de la fonction 1 : " << res << endl;
+    cout << "Résultat de la minimisation de la fonction 1 : " << endl;
+    for (double i : res)
+    	cout << i << endl;
 
 
 

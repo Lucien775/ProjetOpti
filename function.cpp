@@ -13,6 +13,7 @@ class IFonction{
 };
 
 class Fonction1 : public IFonction{
+public:
     //constructeur
     Fonction1(){}
     ~Fonction1(){}
@@ -45,6 +46,7 @@ class Fonction1 : public IFonction{
 };
 
 class Fonction2 : public IFonction{
+public:
     //constructeur
     Fonction2(){}
     ~Fonction2(){}
@@ -79,6 +81,7 @@ class Fonction2 : public IFonction{
 
 class Fonction3 : public IFonction{
     //constructeur
+public:
     Fonction3(){}
     ~Fonction3(){}
     size_t dimension = 2;
