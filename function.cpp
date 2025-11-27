@@ -4,11 +4,6 @@
 
 using namespace std;
 
-class Descente_gradient {
-public:
-
-};
-
 class IFonction{
 
     public:

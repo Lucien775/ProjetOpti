@@ -16,7 +16,7 @@ public:
 		std::vector<double> x = x0;
 		while (norm(f.gradient(x)) > epsilon)
 		{
-			std::vector<char> d = directionMethod.Direction();
+			std::vector<char> d = directionMethod.Direction(x);
 			double lambda = alpha;
 
 			for (size_t i = 0; i < x.size; ++i)
@@ -36,3 +36,31 @@ private:
 		return std::sqrt(sum);
 	}
 };
+
+int main(){
+
+    Fonction1 f1;
+    Fonction2 f2;
+    Fonction3 f3;
+
+    double alpha = 0.1;
+    double epsilon = 10e-6;
+    vector<double> x_init(0.0,0.0);
+
+
+    DirDescenteRealisable d1(x_init, f1);
+
+    DirDescenteRealisable d2(x_init, f2);
+
+    DirDescenteRealisable d3(x_init, f3);
+
+    Algorithme algo(f1, d1, alpha, epsilon);
+
+    vector<double> res = algo.minimize(x_init);
+
+    cout << "Résultat de la minimisation de la fonction 1 : " << res << endl;
+
+
+
+    return 0;
+}

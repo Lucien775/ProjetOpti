@@ -1,12 +1,10 @@
 CPP_SOURCES = $(wildcard *.cpp)
 HEADERS = $(wildcard *.h)
-
-CPP_NO_MAIN = $(filter-out main.cpp, $(CPP_SOURCES))
-OBJ = $(CPP_NO_MAIN:.cpp=.o)
+OBJ = $(CPP_SOURCES:.cpp=.o)
 
 all: main
 
-main: main.cpp $(OBJ)
+main: $(OBJ)
 	g++ $^ -o $@
 
 %.o: %.cpp $(HEADERS)
