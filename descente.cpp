@@ -10,13 +10,11 @@ class DirDescenteRealisable{
 public : 
 
     DirDescenteRealisable() = default;
-
     ~DirDescenteRealisable() = default ; 
 
-    vector<double> Direction(vector<double> xk, IFonction& f){
-
-        std::vector<double> g = f.gradient(xk);
-        for(double v : g)
+    vector<double> Direction(const vector<double>& xk, IFonction& f){
+        vector<double> g = f.gradient(xk);
+        for(double &v : g)
             v = -v;
         return g;
     }

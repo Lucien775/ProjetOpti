@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "descente.cpp"
+#include "Logger.cpp"
 
 class Algorithme
 {
@@ -8,56 +8,70 @@ private:
 	DirDescenteRealisable directionMethod;
 	double alpha;
 	double epsilon;
+	int max_iters;
 public:
-	Algorithme(IFonction& func,DirDescenteRealisable dir,double a,double e): 
-		f(func), directionMethod(dir), alpha(a), epsilon(e) {}
+	Algorithme(IFonction& func, DirDescenteRealisable dir, double a, double e, int max_iters): 
+		f(func), directionMethod(dir), alpha(a), epsilon(e), max_iters(max_iters) {}
 
-	std::vector<double> minimize(std::vector<double>x0) 
+	void minimize(std::vector<double>x0) 
 	{
-		std::vector<double> x = x0;
-		while (norm(f.gradient(x)) > epsilon)
-		{
-			std::vector<double> d = directionMethod.Direction(x, f);
-			double lambda = alpha;
+		Logger logger;
+		logger.start(x0, f, directionMethod);
 
+		auto x = x0;
+		for (size_t k = 0; k <= max_iters; ++k)
+		{
+			double fx = f.result(x);
+
+			double grad_norm = 0.0;
+			for (double v : f.gradient(x)) 
+				grad_norm += v*v;
+			grad_norm = sqrt(grad_norm);
+
+			logger.log(k, fx, grad_norm, x);
+
+			if (grad_norm < epsilon)
+			{
+				logger.end(x, fx, true);
+				return;
+			}
+
+			auto d = directionMethod.Direction(x, f);
 			for (size_t i = 0; i < x.size(); ++i)
 			{
-				x[i] += lambda * d[i];
+				x[i] += alpha * d[i];
 			}
 		}
-		return x;
-	}
-private:
-	static double norm(const std::vector<double>& v)
-	{
-		double sum = 0.0;
-		for (double x : v)
-			sum += x*x;
-
-		return std::sqrt(sum);
+		logger.end(x, f.result(x), false);
 	}
 };
 
 int main(){
-
-    Fonction1 f1;
-    Fonction2 f2;
-    Fonction3 f3;
-
-    double alpha = 0.1;
+	/*Paramètre généraux*/
+	double alpha = 0.1;
     double epsilon = 10e-6;
+    DirDescenteRealisable dir;
+
+    /*Test sur la fonction 1*/
+    std::cout << "\n\n------ Test sur f1 ------" << std::endl;
+    Fonction1 f1;
     std::vector<double> x_init = {3.0, 5.0};
+    Algorithme algo1(f1, dir, alpha, epsilon, 100);
+    algo1.minimize(x_init);
 
+    /*Test sur la fonction 1*/
+    std::cout << "\n\n------ Test sur f2 ------" << std::endl;
+    Fonction2 f2;
+    x_init = {3.0, 5.0, 2.0};
+    Algorithme algo2(f2, dir, alpha, epsilon, 100);
+    algo2.minimize(x_init);
 
-    DirDescenteRealisable d;
-
-    Algorithme algo(f1, d, alpha, epsilon);
-
-    vector<double> res = algo.minimize(x_init);
-
-    cout << "Résultat de la minimisation de la fonction 1 : " << endl;
-    for (double i : res)
-    	cout << i << endl;
+    /*Test sur la fonction 3*/
+    std::cout << "\n\n------ Test sur f3 ------" << std::endl;
+    Fonction1 f3;
+    x_init = {0.0, 0.0};
+    Algorithme algo3(f2, dir, alpha, epsilon, 100);
+    algo3.minimize(x_init);
 
     return 0;
 }

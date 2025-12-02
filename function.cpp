@@ -107,7 +107,6 @@ public:
         else{
             g.push_back((-2)* (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] )   );
             g.push_back( 200 * ( x[1] - x[0]*x[0] ) );
-            g.push_back(6*x[2]);
             return g;
         }
     }
