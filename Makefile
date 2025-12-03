@@ -8,7 +8,7 @@ main: $(OBJ)
 	g++ $^ -o $@
 
 %.o: %.cpp $(HEADERS)
-	g++ -c $< -o $@
+	g++ -std=c++17 -c $< -o $@
 
 clean:
 	rm -f *.o main

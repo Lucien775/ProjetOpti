@@ -50,27 +50,30 @@ int main(){
 	/*Paramètre généraux*/
 	double alpha = 0.1;
     double epsilon = 10e-6;
-    DirDescenteRealisable dir;
-
+	
+	
     /*Test sur la fonction 1*/
     std::cout << "\n\n------ Test sur f1 ------" << std::endl;
     Fonction1 f1;
+    DirDescenteRealisable dir1;
     std::vector<double> x_init = {3.0, 5.0};
-    Algorithme algo1(f1, dir, alpha, epsilon, 100);
+    Algorithme algo1(f1, dir1, alpha, epsilon, 100);
     algo1.minimize(x_init);
-
+	
     /*Test sur la fonction 1*/
     std::cout << "\n\n------ Test sur f2 ------" << std::endl;
     Fonction2 f2;
+	DirDescenteRealisable dir2;
     x_init = {3.0, 5.0, 2.0};
-    Algorithme algo2(f2, dir, alpha, epsilon, 100);
+    Algorithme algo2(f2, dir2, alpha, epsilon, 100);
     algo2.minimize(x_init);
-
+	
     /*Test sur la fonction 3*/
     std::cout << "\n\n------ Test sur f3 ------" << std::endl;
     Fonction1 f3;
-    x_init = {0.0, 0.0};
-    Algorithme algo3(f2, dir, alpha, epsilon, 100);
+	DirDescenteRealisable dir3;
+    x_init = {1.0, 1.0};
+    Algorithme algo3(f3, dir3, alpha, epsilon, 100);
     algo3.minimize(x_init);
 
     return 0;
