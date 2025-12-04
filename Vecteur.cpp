@@ -1,14 +1,13 @@
 #include <iostream>
+#include <array>
+#include <math.h>
 
 
 
 using namespace std;
 
 template <size_t N>
-
 class Vecteur : public std::array<double, N>{
-
-    
 public : 
 
 //Constructeur Destructeur 

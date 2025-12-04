@@ -1,6 +1,6 @@
-#include <iostream>
+/*#include <iostream>
 #include <vector>
-#include "descente.cpp"
+#include "Algorithme.cpp"
 
 class Logger
 {
@@ -8,7 +8,7 @@ public:
 	Logger() = default;
 	~Logger() = default;
 
-	void start(const std::vector<double>& x0, const IFonction&, const DirDescenteRealisable& dir)
+	void start(const std::vector<double>& x0, const FonctionObjectif&, const Optimiseur& dir)
 	{
 		std::cout << "---\n--- Descente de Gradient (Pas Fixe)\n---" << std::endl;
 		std::cout << "\nPoint initial : (";
@@ -56,4 +56,4 @@ public:
 
         std::cout << "Valeur : " << f_final << endl;
     }
-};
+};*/

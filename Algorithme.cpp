@@ -30,7 +30,6 @@ public:
 
             if (grad_norm < epsilon)
             {
-                x_depart = x;
                 return;
             }
 
@@ -54,7 +53,7 @@ public:
     ~DescenteGradient() override = default;
     Vecteur<N> calculerDirection(const Vecteur<N>& x) const override
     {
-        auto g = f.calculerGradient(x);
+        auto g = this->f.calculerGradient(x);
         return g * (-1.0);   
     }
 };
@@ -69,7 +68,7 @@ public:
     ~PlusFortePente() override = default;
     Vecteur<N> calculerDirection(const Vecteur<N>& x) const override
     {
-        auto g = f.calculerGradient(x);
+        auto g = this->f.calculerGradient(x);
         double g_norm = g.calculNorm();
         double coeff = (-1.0) / g_norm;
         return g * coeff;   
@@ -83,7 +82,7 @@ int main(){
     double epsilon = 10e-6;
 	
     FonctionObjectif1 f1;
-	DescenteGradient dg(f1, alpha, epsilon, 100);
+	DescenteGradient<2> dg(f1, alpha, epsilon, 100);
     Vecteur<2> x0 = {0.0, 0.0};
 	dg.optimiser(x0);
     
