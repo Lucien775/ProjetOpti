@@ -56,13 +56,13 @@ public :
         return new_vec;
     }
 
-    double calculNorm(Vecteur v1){
+    double calculNorm(){
         double norm = 0.0;
 
-        for(double i : v1){
+        for(double i : point){
             norm += i*i;
         }
-        
+
         return sqrt(norm);
     }
 
