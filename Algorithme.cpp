@@ -1,7 +1,8 @@
+#ifndef ALGO
+#define ALGO 
+
 #include <stdlib.h>
-#include "function.cpp"
-
-
+#include "Logger.cpp"
 
 template <size_t N>
 class Optimiseur
@@ -19,6 +20,9 @@ public:
     virtual ~Optimiseur() = default;
     void optimiser(Vecteur<N>& x_depart)
     {
+        Logger<N> logger;
+        logger.start(*this, x_depart, f, max_iters);
+
         auto x = x_depart;
 
         for (int k = 0; k <= max_iters; ++k)
@@ -28,17 +32,22 @@ public:
             auto grad = f.calculerGradient(x);
             double grad_norm = grad.calculNorm();
 
+            logger.log(k, fx, grad_norm, x);
+
             if (grad_norm < epsilon)
             {
+                logger.end(x, fx, true);
                 return;
             }
 
             auto d = calculerDirection(x);
 
-            x = x + d*alpha;
+            x = x + d * alpha;
         }
+        logger.end(x, f.evaluer(x), false);
     }
     virtual Vecteur<N> calculerDirection(const Vecteur<N>& x) const = 0;
+    virtual void afficher() const = 0;
 };
 
 
@@ -55,6 +64,11 @@ public:
     {
         auto g = this->f.calculerGradient(x);
         return g * (-1.0);   
+    }
+
+    void afficher() const
+    {
+        std::cout << "Descente de Gradient (Pas Fixe)" << std::endl;
     }
 };
 
@@ -73,19 +87,28 @@ public:
         double coeff = (-1.0) / g_norm;
         return g * coeff;   
     }
+
+    void afficher() const
+    {
+        std::cout << "Plus forte pente" << std::endl;
+    }
 };
 
 
 int main(){
-	/*Paramètre généraux*/
-	double alpha = 0.1;
+    /*Paramètre généraux*/
+    double alpha = 0.1;
     double epsilon = 10e-6;
-	
+    
     FonctionObjectif1 f1;
-	DescenteGradient<2> dg(f1, alpha, epsilon, 100);
+    DescenteGradient<2> dg(f1, alpha, epsilon, 100);
     Vecteur<2> x0 = {0.0, 0.0};
-	dg.optimiser(x0);
+    dg.optimiser(x0);
     
 
     return 0;
 }
+
+
+#endif
+

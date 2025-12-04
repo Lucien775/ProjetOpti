@@ -1,35 +1,43 @@
-/*#include <iostream>
+#ifndef LOGGER
+#define LOGGER 
+
+#include <iostream>
 #include <vector>
+#include "function.cpp"
 #include "Algorithme.cpp"
 
+template <size_t N>
 class Logger
 {
 public:
 	Logger() = default;
 	~Logger() = default;
 
-	void start(const std::vector<double>& x0, const FonctionObjectif&, const Optimiseur& dir)
+	void start(const Optimiseur<N>& opt, const Vecteur<N>& x0, const FonctionObjectif<N>& f, int max_iter) const
 	{
-		std::cout << "---\n--- Descente de Gradient (Pas Fixe)\n---" << std::endl;
+		std::cout << "---\n---" << opt.afficher()<<"\n---" << std::endl;
+
 		std::cout << "\nPoint initial : (";
 		for (size_t i = 0; i < x0.size() - 1; ++i)
 			std::cout << x0[i] << ", ";
 		std::cout << x0[x0.size() - 1] << ")\n" << std::endl;
 
-		std::cout << "Méthode : Descente de Gradient" << std::endl;
+		std::cout << "Fonction : " << f.afficher_f() << std::endl;
+
+		std::cout << "Méthode : " << opt.afficher() << std::endl;
 
 		cout << "Max-iters : 100\n" << std::endl;
         cout << "Iter.    Obj.        ||Grad||     Point" << std::endl;
 	}
 
-	void log(size_t k, double fx, double grad, const std::vector<double>& x)
+	void log(int k, double fx, double grad_norm, const Vecteur<N>& x) const
 	{
 		if (k % 10 == 0)
 		{
 			std::cout << k << "    ";
 			std::cout.precision(5);
 			std::cout << fx << "    ";
-			std::cout << scientific << grad << "    ";
+			std::cout << scientific << grad_norm << "    ";
 
 			std::cout << "(";
             std::cout.precision(2);
@@ -39,7 +47,7 @@ public:
 		}
 	}
 
-	void end(const std::vector<double>& x_final, double f_final, bool converged)
+	void end(const Vecteur<N>& x_final, double f_final, bool converged) const
 	{
         std::cout << "Solution :\n";
 
@@ -56,4 +64,7 @@ public:
 
         std::cout << "Valeur : " << f_final << endl;
     }
-};*/
+};
+
+
+#endif

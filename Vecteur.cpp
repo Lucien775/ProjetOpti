@@ -1,3 +1,6 @@
+#ifndef VECTEUR
+#define VECTEUR 
+
 #include <iostream>
 #include <array>
 #include <math.h>
@@ -57,3 +60,6 @@ public :
     }
 
 };
+
+#endif
+

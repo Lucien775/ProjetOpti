@@ -1,3 +1,6 @@
+#ifndef FUNCTION
+#define FUNCTION 
+
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -70,3 +73,8 @@ public:
         std::cout << "r(x) = (1-x)^2 + 100(y-x^2)^2\n";
     }
 };
+
+
+
+#endif
+
