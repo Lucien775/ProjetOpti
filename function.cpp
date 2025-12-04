@@ -4,24 +4,30 @@
 
 using namespace std;
 
-class IFonction{
+template <size_t N>
+class FonctionObjectif{
 public:
     virtual ~IFonction() = default;
     virtual double result(const vector<double>& x) const = 0;
     virtual vector<double> gradient(const vector<double>& x) const = 0;
     virtual size_t dimension() const = 0;
+
+    virtual Vecteur<N> calculerGradient (const Vecteur& x) = 0;
+    virtual double evaluer( const Vecteur<N>& x) = 0;
+    virtual void afficher_f() = 0;
 };
 
-class Fonction1 : public IFonction{
+template <size_t N>
+class FonctionObjectif1 : public FonctionObjectif{
 public:
     //constructeur
-    Fonction1() = default;
+    FonctionObjectif1() = default;
 
     size_t dimension() const override {return 2;}
 
-    double result(const vector<double>& x) const override{
+    double evaluer(const Vecteur<N>& x) const override{
         double r = 0.0;
-        if(x.size() != dimension()){
+        if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
@@ -31,30 +37,44 @@ public:
         }
     }
 
-    vector<double> gradient(const vector<double>& x) const override{
+    Vecteur<N> calculerGradient(const Vecteur<N>& x) const override{
         vector<double> g;
-        if(x.size() != dimension()){
+        if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
         }
         else{
-            g.push_back(2*x[0]);
-            g.push_back(4*x[1]);
+
+            double v1 = 2*x[0] ;
+            double v2 = 4*x[1] ;
+            array<double, dimension()> v = {v1, v2};
+
+            g.setValue( v );
+
+            /*g.push_back(2*x[0]);
+            g.push_back(4*x[1]); */
             return g;
         }
     }
+
+    void afficher_f(){
+        cout<< "Fonction q1"<<endl;
+        cout<< " x[0]*x[0] + 2*x[1]*x[1] "<<endl;
+    }
 };
 
-class Fonction2 : public IFonction{
+template <size_t N>
+
+class FonctionObjectif2 : public FonctionObjectif{
 public:
     //constructeur
-    Fonction2() = default;
+    FonctionObjectif2() = default;
 
     size_t dimension() const override {return 3;}
 
-    double result(const vector<double>& x) const override{
+    double evaluer(const Vecteur<N>& x) const override{
         double r = 0.0;
-        if(x.size() != dimension()){
+        if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
@@ -64,31 +84,45 @@ public:
         }
     }
 
-    vector<double> gradient(const vector<double>& x) const override{
-        vector<double> g;
-        if(x.size() != dimension()){
+    Vecteur<N> calculerGradient(const Vecteur<N>& x) const override{
+        Vecteur<N> g;
+        if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
         }
         else{
-            g.push_back(2*x[0]);
+
+            double v1 = 2*x[0] ;
+            double v2 = 4*x[1] ;
+            double v3 = 6*x[2] ;
+            array<double, dimension()> v = {v1, v2, v3};
+
+            g.setValue( v );
+            /*g.push_back(2*x[0]);
             g.push_back(4*x[1]);
-            g.push_back(6*x[2]);
+            g.push_back(6*x[2]); */
             return g;
         }
     }
+
+        void afficher_f(){
+        cout<< "======Fonction q2======"<<endl;
+        cout<< " x[0]*x[0] + 2*x[1]*x[1] + 3*x[2]*x[2] "<<endl;
+    }
 };
 
-class Fonction3 : public IFonction{
+template <size_t N>
+
+class FonctionObjectif3 : public FonctionObjectif{
 public:
     //constructeur
-    Fonction3() = default;
+    FonctionObjectif3() = default;
 
     size_t dimension() const override {return 2;}
 
-    double result(const vector<double>& x) const override{
+    double evaluer(const Vecteur<N>& x) const override{
         double r = 0.0;
-        if(x.size() != dimension()){
+        if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
@@ -98,19 +132,35 @@ public:
         }
     }
 
-    vector<double> gradient(const vector<double>& x) const override{
-        vector<double> g;
-        if(x.size() != dimension()){
+    Vecteur<N> calculerGradient(const Vecteur<N>& x) const override{
+        Vecteur<N> g;
+        if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
         }
         else{
-            g.push_back((-2)* (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] )   );
-            g.push_back( 200 * ( x[1] - x[0]*x[0] ) );
+            double v1 = (-2)* (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] ) ;
+            double v2 = 200 * ( x[1] - x[0]*x[0] );
+            array<double, dimension()> v = {v1, v2};
+
+            g.setValue( v );
+
+            /*g.push_back((-2)* (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] )   );
+            g.push_back( 200 * ( x[1] - x[0]*x[0] ) ); */
+
             return g;
         }
     }
+
+    void afficher_f(){
+        cout<< "=====Fonction r1====="<<endl;
+        cout<< " (1-x[0])*(1-x[0]) + 100*(x[1] - x[0]*x[0])*(x[1] - x[0]*x[0]) "<<endl;
+    }
+    
 };
+
+
+
 
 
 /*
