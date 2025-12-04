@@ -18,8 +18,7 @@ public:
         : f(func), alpha(a), epsilon(e), max_iters(max_it) {}
 
     virtual ~Optimiseur() = default;
-	template <size_t N>
-    void optimiser(Vecteur& x_depart)
+    void optimiser(Vecteur<N>& x_depart)
     {
         auto x = x_depart;
 
@@ -38,12 +37,10 @@ public:
 
             auto d = calculerDirection(x);
 
-            for (size_t i = 0; i < x.getDim(); ++i)
-                x[i] += alpha * d[i];
+            x = x + d*alpha;
         }
     }
-	template <site_t N>
-    virtual Vecteur calculerDirection(const Vecteur& x) const = 0;
+    virtual Vecteur<N> calculerDirection(const Vecteur<N>& x) const = 0;
 };
 
 
@@ -52,13 +49,11 @@ template <size_t N>
 class DescenteGradient : public Optimiseur
 {
 public:
-	template <size_t N>
     DescenteGradient(FonctionObjective& func, double a, double e, int max_it)
         : Optimiseur(func, a, e, max_it) {}
 
     ~DescenteGradient() override = default;
-	template <size_t N>
-    Vecteur calculerDirection(const Vecteur& x) const override
+    Vecteur<N> calculerDirection(const Vecteur<N>& x) const override
     {
         auto g = f.calculerGradient(x);
         return g * (-1.0);   
@@ -69,19 +64,17 @@ template <size_t N>
 class PlusFortePente : public Optimiseur
 {
 public:
-	template <size_t N>
     PlusFortePente(FonctionObjective& func, double a, double e, int max_it)
         : Optimiseur(func, a, e, max_it) {}
 
     ~PlusFortePente() override = default;
-	template <size_t N>
-    Vecteur calculerDirection(const Vecteur& x) const override
+    Vecteur<N> calculerDirection(const Vecteur<N>& x) const override
     {
         auto g = f.calculerGradient(x);
         double g_norm = g.norm();
-        return (g * (-1.0))/g_norm;   
+        double coeff = (-1.0) / g_norm;
+        return g * coeff;   
     }
-    
 };
 
 
