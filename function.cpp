@@ -17,7 +17,7 @@ public:
     virtual void afficher_f() = 0;
 };
 
-template <size_t N>
+//template <size_t N>
 class FonctionObjectif1 : public FonctionObjectif{
 public:
     //constructeur
@@ -25,7 +25,7 @@ public:
 
     size_t dimension() const override {return 2;}
 
-    double evaluer(const Vecteur<N>& x) const override{
+    double evaluer(const Vecteur<2>& x) const override{
         double r = 0.0;
         if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
@@ -37,7 +37,7 @@ public:
         }
     }
 
-    Vecteur<N> calculerGradient(const Vecteur<N>& x) const override{
+    Vecteur<2> calculerGradient(const Vecteur<2>& x) const override{
         vector<double> g;
         if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
@@ -47,9 +47,10 @@ public:
 
             double v1 = 2*x[0] ;
             double v2 = 4*x[1] ;
-            array<double, dimension()> v = {v1, v2};
+            //array<double, dimension()> v = {v1, v2};
 
-            g.setValue( v );
+            g[0] = v1;
+            g[1] = v2;
 
             /*g.push_back(2*x[0]);
             g.push_back(4*x[1]); */
@@ -63,7 +64,7 @@ public:
     }
 };
 
-template <size_t N>
+//template <size_t N>
 
 class FonctionObjectif2 : public FonctionObjectif{
 public:
@@ -72,7 +73,7 @@ public:
 
     size_t dimension() const override {return 3;}
 
-    double evaluer(const Vecteur<N>& x) const override{
+    double evaluer(const Vecteur<3>& x) const override{
         double r = 0.0;
         if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
@@ -84,8 +85,8 @@ public:
         }
     }
 
-    Vecteur<N> calculerGradient(const Vecteur<N>& x) const override{
-        Vecteur<N> g;
+    Vecteur<3> calculerGradient(const Vecteur<3>& x) const override{
+        Vecteur<3> g;
         if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
@@ -95,9 +96,11 @@ public:
             double v1 = 2*x[0] ;
             double v2 = 4*x[1] ;
             double v3 = 6*x[2] ;
-            array<double, dimension()> v = {v1, v2, v3};
+            //array<double, dimension()> v = {v1, v2, v3};
 
-            g.setValue( v );
+            g[0] = v1;
+            g[1] = v2;
+            g[2] = v3;
             /*g.push_back(2*x[0]);
             g.push_back(4*x[1]);
             g.push_back(6*x[2]); */
@@ -111,7 +114,7 @@ public:
     }
 };
 
-template <size_t N>
+//template <size_t N>
 
 class FonctionObjectif3 : public FonctionObjectif{
 public:
@@ -120,20 +123,20 @@ public:
 
     size_t dimension() const override {return 2;}
 
-    double evaluer(const Vecteur<N>& x) const override{
+    double evaluer(const Vecteur<2>& x) const override{
         double r = 0.0;
         if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
         else{
-            r = (1-x[0])*(1-x[0]) + 100*(x[1] - x[0]*x[0])*(x[1] - x[0]*x[0]);
+            r = (1-x[0])(1-x[0]) + 100(x[1] - x[0]x[0])(x[1] - x[0]*x[0]);
             return r;
         }
     }
 
-    Vecteur<N> calculerGradient(const Vecteur<N>& x) const override{
-        Vecteur<N> g;
+    Vecteur<2> calculerGradient(const Vecteur<2>& x) const override{
+        Vecteur<2> g;
         if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
@@ -141,11 +144,12 @@ public:
         else{
             double v1 = (-2)* (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] ) ;
             double v2 = 200 * ( x[1] - x[0]*x[0] );
-            array<double, dimension()> v = {v1, v2};
+            //array<double, dimension()> v = {v1, v2};
 
-            g.setValue( v );
+            g[0] = v1;
+            g[1] = v2 ;
 
-            /*g.push_back((-2)* (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] )   );
+            /*g.push_back((-2) (1 - x[0]) - 400 * x[0] * ( x[1] - x[0]*x[0] )   );
             g.push_back( 200 * ( x[1] - x[0]*x[0] ) ); */
 
             return g;
@@ -154,7 +158,7 @@ public:
 
     void afficher_f(){
         cout<< "=====Fonction r1====="<<endl;
-        cout<< " (1-x[0])*(1-x[0]) + 100*(x[1] - x[0]*x[0])*(x[1] - x[0]*x[0]) "<<endl;
+        cout<< " (1-x[0])(1-x[0]) + 100(x[1] - x[0]x[0])(x[1] - x[0]*x[0]) "<<endl;
     }
     
 };
@@ -171,5 +175,3 @@ class IndexOutOfBoundsException : public exception{
     public:
     explicit IndexOutOfBoundsException(const string& msg) : message(msg)
 };
-
-*/
