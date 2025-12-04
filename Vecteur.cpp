@@ -8,9 +8,6 @@ template <size_t N>
 
 class Vecteur : public std::array<double, N>{
 
-private : 
-    array<double,N> point;
-    size_t dimension = N;
     
 public : 
 
@@ -23,62 +20,41 @@ public :
 
 //opérateurs
 
-    Vecteur addition_Vecteur(Vecteur v1, Vecteur v2){
+    Vecteur<N> Vecteur::operator+(const Vecteur& v2){
 
         Vecteur new_vec;
         for(int i = 0, i<N, i++){
-            new_vec->point[i] = v1->point[i] + v2->point[i];
+            new_vec[i] = (*this)[i] + v2[i];
         }
         return new_vec;
     }
 
-    Vecteur soustraction_Vecteur(Vecteur v1, Vecteur v2){
+    Vecteur<N> Vecteur::operator-(const Vecteur& v2){
         Vecteur new_vec;
         for(int i = 0, i<N, i++){
-            new_vec->point[i] = v1->point[i] - v2->point[i];
+            new_vec[i] = (*this)[i] - v2[i];
         }
         return new_vec;
     }
 
-    Vecteur multiplicateur_Vecteur(Vecteur v1, Vecteur v2){
+    Vecteur<N> Vecteur::operator*(cosnt double& k){
         Vecteur new_vec;
         for(int i = 0, i<N, i++){
-            new_vec->point[i] = v1->point[i] * v2->point[i];
+            new_vec[i] = (*this)[i] * k;
         }
         return new_vec;
     }
 
-    Vecteur multiplicateur_Scalaire(Vecteur v1, double k){
-        Vecteur new_vec;
-        for(int i = 0, i<N, i++){
-            new_vec->point[i] = v1->point[i] * k;
-        }
-        return new_vec;
-    }
+
 
     double calculNorm(){
         double norm = 0.0;
 
-        for(double i : point){
+        for(double i : (*this)){
             norm += i*i;
         }
 
         return sqrt(norm);
     }
-
-
-
-
-
-// getters
-    const size_t getDim() const {
-        return dimension;
-    }
-// setters 
-    void setValue(array<double,N> new_point){
-
-        this->point = new_point;
-    }
-
 
 };
