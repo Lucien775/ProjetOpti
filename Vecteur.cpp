@@ -20,26 +20,26 @@ public :
 
 //opérateurs
 
-    Vecteur<N> Vecteur::operator+(const Vecteur& v2){
+    Vecteur<N> operator+(const Vecteur& v2){
 
         Vecteur new_vec;
-        for(int i = 0, i<N, i++){
+        for(int i = 0; i<N; i++){
             new_vec[i] = (*this)[i] + v2[i];
         }
         return new_vec;
     }
 
-    Vecteur<N> Vecteur::operator-(const Vecteur& v2){
+    Vecteur<N> operator-(const Vecteur& v2){
         Vecteur new_vec;
-        for(int i = 0, i<N, i++){
+        for(int i = 0; i<N; i++){
             new_vec[i] = (*this)[i] - v2[i];
         }
         return new_vec;
     }
 
-    Vecteur<N> Vecteur::operator*(cosnt double& k){
+    Vecteur<N> operator*(const double& k){
         Vecteur new_vec;
-        for(int i = 0, i<N, i++){
+        for(int i = 0; i<N; i++){
             new_vec[i] = (*this)[i] * k;
         }
         return new_vec;

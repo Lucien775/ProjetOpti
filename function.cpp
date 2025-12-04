@@ -1,23 +1,20 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include "Vecteur.cpp"
 
 using namespace std;
 
 template <size_t N>
 class FonctionObjectif{
 public:
-    virtual ~IFonction() = default;
-    virtual double result(const vector<double>& x) const = 0;
-    virtual vector<double> gradient(const vector<double>& x) const = 0;
     virtual size_t dimension() const = 0;
-
-    virtual Vecteur<N> calculerGradient (const Vecteur& x) = 0;
+    virtual Vecteur<N> calculerGradient (const Vecteur<N>& x) = 0;
     virtual double evaluer( const Vecteur<N>& x) = 0;
     virtual void afficher_f() = 0;
 };
 
-//template <size_t N>
+template <size_t N>
 class FonctionObjectif1 : public FonctionObjectif{
 public:
     //constructeur
@@ -25,7 +22,7 @@ public:
 
     size_t dimension() const override {return 2;}
 
-    double evaluer(const Vecteur<2>& x) const override{
+    double evaluer(const Vecteur<N>& x) const override{
         double r = 0.0;
         if(x.getDim() != dimension()){
             cout<<"Erreur"<<endl;
@@ -39,7 +36,7 @@ public:
 
     Vecteur<2> calculerGradient(const Vecteur<2>& x) const override{
         vector<double> g;
-        if(x.getDim() != dimension()){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
         }
@@ -75,7 +72,7 @@ public:
 
     double evaluer(const Vecteur<3>& x) const override{
         double r = 0.0;
-        if(x.getDim() != dimension()){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
@@ -87,7 +84,7 @@ public:
 
     Vecteur<3> calculerGradient(const Vecteur<3>& x) const override{
         Vecteur<3> g;
-        if(x.getDim() != dimension()){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
         }
@@ -125,7 +122,7 @@ public:
 
     double evaluer(const Vecteur<2>& x) const override{
         double r = 0.0;
-        if(x.getDim() != dimension()){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return 0.0;
         }
@@ -137,7 +134,7 @@ public:
 
     Vecteur<2> calculerGradient(const Vecteur<2>& x) const override{
         Vecteur<2> g;
-        if(x.getDim() != dimension()){
+        if(x.size() != dimension()){
             cout<<"Erreur"<<endl;
             return g;
         }
@@ -161,17 +158,4 @@ public:
         cout<< " (1-x[0])(1-x[0]) + 100(x[1] - x[0]x[0])(x[1] - x[0]*x[0]) "<<endl;
     }
     
-};
-
-
-
-
-
-/*
-class IndexOutOfBoundsException : public exception{
-    private:
-    string message;
-
-    public:
-    explicit IndexOutOfBoundsException(const string& msg) : message(msg)
 };
