@@ -3,44 +3,77 @@
 
 class Optimiseur
 {
-private:
-	FonctionObjective& f;
-	double alpha;
-	double epsilon;
-	int max_iters;
+protected: 
+    FonctionObjective& f;
+    double alpha;
+    double epsilon;
+    int max_iters;
+
 public:
-	Optimiseur(FonctionObjective& func, double a, double e, int max_iters):
-		f(func), alpha(a), epsilon(e), max_iters(max_iters) {}
+    Optimiseur(FonctionObjective& func, double a, double e, int max_it)
+        : f(func), alpha(a), epsilon(e), max_iters(max_it) {}
 
-	~Optimiseur() = default;
+    virtual ~Optimiseur() = default;
 
-	void optimiser(Vecteur& x_depart)
-	{
-		auto x = x_depart;
-		for (size_t k = 0; k <= max_iters; ++k)
-		{
-			double fx = f.evaluer(x);
+    void optimiser(Vecteur& x_depart)
+    {
+        auto x = x_depart;
 
-			auto grad = f.calculerGradient(x);
-			double grad_norm = grad.norm();
+        for (int k = 0; k <= max_iters; ++k)
+        {
+            double fx = f.evaluer(x);
 
-			if (grad_norm < epsilon)
-			{
-				return;
-			}
+            auto grad = f.calculerGradient(x);
+            double grad_norm = grad.norm();
 
-			auto d = calulerDirection(x);
-			for (size_t i = 0; i < d.getDim(); ++i)
-			{
-				x[i] += alpha * d[i];
-			}
+            if (grad_norm < epsilon)
+            {
+                x_depart = x;
+                return;
+            }
 
-		}
-	}
+            auto d = calculerDirection(x);
 
-	Vecteur calculerGradient(const Vecteur& x) const = 0;
-	
+            for (size_t i = 0; i < x.getDim(); ++i)
+                x[i] += alpha * d[i];
+        }
+    }
+
+    virtual Vecteur calculerDirection(const Vecteur& x) const = 0;
 };
+
+class DescenteGradient : public Optimiseur
+{
+public:
+    DescenteGradient(FonctionObjective& func, double a, double e, int max_it)
+        : Optimiseur(func, a, e, max_it) {}
+
+    ~DescenteGradient() override = default;
+
+    Vecteur calculerDirection(const Vecteur& x) const override
+    {
+        auto g = f.calculerGradient(x);
+        return g * (-1.0);   
+    }
+};
+
+class PlusFortePente : public Optimiseur
+{
+public:
+    PlusFortePente(FonctionObjective& func, double a, double e, int max_it)
+        : Optimiseur(func, a, e, max_it) {}
+
+    ~PlusFortePente() override = default;
+
+    Vecteur calculerDirection(const Vecteur& x) const override
+    {
+        auto g = f.calculerGradient(x);
+        double g_norm = g.norm();
+        return (g * (-1.0))/g_norm;   
+    }
+    
+};
+
 
 int main(){
 	/*Paramètre généraux*/
