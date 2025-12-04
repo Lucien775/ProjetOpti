@@ -1,49 +1,45 @@
 #include <stdlib.h>
 #include "Logger.cpp"
 
-class Algorithme
+class Optimiseur
 {
 private:
-	IFonction& f;
-	DirDescenteRealisable directionMethod;
+	FonctionObjective& f;
 	double alpha;
 	double epsilon;
 	int max_iters;
 public:
-	Algorithme(IFonction& func, DirDescenteRealisable dir, double a, double e, int max_iters): 
-		f(func), directionMethod(dir), alpha(a), epsilon(e), max_iters(max_iters) {}
+	Optimiseur(FonctionObjective& func, double a, double e, int max_iters):
+		f(func), alpha(a), epsilon(e), max_iters(max_iters) {}
 
-	void minimize(std::vector<double>x0) 
+	~Optimiseur() = default;
+
+	void optimiser(Vecteur& x_depart)
 	{
-		Logger logger;
-		logger.start(x0, f, directionMethod);
-
-		auto x = x0;
+		auto x = x_depart;
 		for (size_t k = 0; k <= max_iters; ++k)
 		{
-			double fx = f.result(x);
+			double fx = f.evaluer(x);
 
-			double grad_norm = 0.0;
-			for (double v : f.gradient(x)) 
-				grad_norm += v*v;
-			grad_norm = sqrt(grad_norm);
-
-			logger.log(k, fx, grad_norm, x);
+			auto grad = f.calculerGradient(x);
+			double grad_norm = grad.norm();
 
 			if (grad_norm < epsilon)
 			{
-				logger.end(x, fx, true);
 				return;
 			}
 
-			auto d = directionMethod.Direction(x, f);
-			for (size_t i = 0; i < x.size(); ++i)
+			auto d = calulerDirection(x);
+			for (size_t i = 0; i < d.getDim(); ++i)
 			{
 				x[i] += alpha * d[i];
 			}
+
 		}
-		logger.end(x, f.result(x), false);
 	}
+
+	Vecteur calculerGradient(const Vecteur& x) const = 0;
+	
 };
 
 int main(){
@@ -72,7 +68,7 @@ int main(){
     std::cout << "\n\n------ Test sur f3 ------" << std::endl;
     Fonction1 f3;
 	DirDescenteRealisable dir3;
-    x_init = {1.0, 1.0};
+    x_init = {0.0, 0.0};
     Algorithme algo3(f3, dir3, alpha, epsilon, 100);
     algo3.minimize(x_init);
 
