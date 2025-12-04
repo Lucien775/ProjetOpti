@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include "Logger.cpp"
 
+
+
+template <size_t N>
 class Optimiseur
 {
 protected: 
@@ -14,7 +17,7 @@ public:
         : f(func), alpha(a), epsilon(e), max_iters(max_it) {}
 
     virtual ~Optimiseur() = default;
-
+	template <size_t N>
     void optimiser(Vecteur& x_depart)
     {
         auto x = x_depart;
@@ -38,18 +41,22 @@ public:
                 x[i] += alpha * d[i];
         }
     }
-
+	template <site_t N>
     virtual Vecteur calculerDirection(const Vecteur& x) const = 0;
 };
 
+
+
+template <size_t N>
 class DescenteGradient : public Optimiseur
 {
 public:
+	template <size_t N>
     DescenteGradient(FonctionObjective& func, double a, double e, int max_it)
         : Optimiseur(func, a, e, max_it) {}
 
     ~DescenteGradient() override = default;
-
+	template <size_t N>
     Vecteur calculerDirection(const Vecteur& x) const override
     {
         auto g = f.calculerGradient(x);
@@ -57,14 +64,16 @@ public:
     }
 };
 
+template <size_t N>
 class PlusFortePente : public Optimiseur
 {
 public:
+	template <size_t N>
     PlusFortePente(FonctionObjective& func, double a, double e, int max_it)
         : Optimiseur(func, a, e, max_it) {}
 
     ~PlusFortePente() override = default;
-
+	template <size_t N>
     Vecteur calculerDirection(const Vecteur& x) const override
     {
         auto g = f.calculerGradient(x);
