@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include "function.cpp"
-#include "Algorithme.cpp"
+#include "function.hpp"
+#include "Optimiseur.hpp"
 
 template <size_t N>
 class Logger

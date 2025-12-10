@@ -1,6 +1,8 @@
-CPP_SOURCES = $(wildcard *.cpp)
-HEADERS = $(wildcard *.h)
+CPP_SOURCES = main.cpp  
+HEADERS = $(wildcard *.hpp)
 OBJ = $(CPP_SOURCES:.cpp=.o)
+
+FLAGS = -std=c++17 -Wall 
 
 all: main
 
@@ -8,7 +10,7 @@ main: $(OBJ)
 	g++ $^ -o $@
 
 %.o: %.cpp $(HEADERS)
-	g++ -std=c++17 -c $< -o $@
+	g++ $(FLAGS) -c $< -o $@
 
 clean:
 	rm -f *.o main

@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "Vecteur.cpp"
+#include "Vecteur.hpp"
 
 using namespace std;
 
