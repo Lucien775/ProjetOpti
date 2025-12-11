@@ -10,12 +10,12 @@ class Optimiseur
 protected: 
 
     FonctionObjectif<N>& f;
-    PasDeplacement Pas;
+    PasDeplacement<N>& Pas;
     double epsilon;
     int max_iters;
 
 public:
-    Optimiseur(FonctionObjectif<N>& func, PasDeplacement Pas, double e, int max_it)
+    Optimiseur(FonctionObjectif<N>& func, PasDeplacement<N>& Pas, double e, int max_it)
         : f(func), Pas(Pas), epsilon(e), max_iters(max_it) {}
 
     virtual ~Optimiseur() = default;
@@ -58,8 +58,8 @@ template <size_t N>
 class DescenteGradient : public Optimiseur<N>
 {
 public:
-    DescenteGradient(FonctionObjectif<N>& func, double e, int max_it)
-        : Optimiseur<N>(func, e, max_it) {}
+    DescenteGradient(FonctionObjectif<N>& func, PasDeplacement<N>& Pas,double e, int max_it)
+        : Optimiseur<N>(func, Pas , e, max_it) {}
 
     ~DescenteGradient() override = default;
     Vecteur<N> calculerDirection(const Vecteur<N>& x) const override
@@ -77,8 +77,8 @@ template <size_t N>
 class PlusFortePente : public Optimiseur<N>
 {
 public:
-    PlusFortePente(FonctionObjectif<N>& func, double e, int max_it)
-        : Optimiseur<N>(func, e, max_it) {}
+    PlusFortePente(FonctionObjectif<N>& func, PasDeplacement<N>& Pas ,double e, int max_it)
+        : Optimiseur<N>(func, Pas ,e, max_it) {}
 
     ~PlusFortePente() override = default;
     Vecteur<N> calculerDirection(const Vecteur<N>& x) const override
