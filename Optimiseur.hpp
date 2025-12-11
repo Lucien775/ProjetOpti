@@ -49,7 +49,6 @@ public:
         logger.end(x, f.evaluer(x), false);
     }
     virtual Vecteur<N> calculerDirection(const Vecteur<N>& x) const = 0;
-    virtual void afficher() const = 0;
 };
 
 
@@ -68,10 +67,6 @@ public:
         return g * (-1.0);   
     }
 
-    void afficher() const
-    {
-        std::cout << "Descente de Gradient (Pas Fixe)" << std::endl;
-    }
     std::string getNom() const override {
         return "méthode descente de gradient pas fixe";
     }
@@ -93,10 +88,6 @@ public:
         return g * coeff;   
     }
 
-    void afficher() const
-    {
-        std::cout << "Plus forte pente" << std::endl;
-    }
     std::string getNom() const override {
         return "méthode de la plus forte pente";
     }
