@@ -1,8 +1,15 @@
 #ifndef ALGO
 #define ALGO 
-#include "Pas.hpp"
 #include <stdlib.h>
+#include <vector>
+#include "Pas.hpp"
 #include "Logger.hpp"
+#include "io/evenement/Demarrage.hpp"
+#include "io/evenement/Demarrage.hpp"
+#include "io/evenement/EvenementIteration.hpp"
+#include "io/evenement/EvenementIteration.hpp"
+#include "io/evenement/EvenementTerminaision.hpp"
+
 
 template <size_t N>
 class Optimiseur
@@ -14,6 +21,8 @@ protected:
     double epsilon;
     int max_iters;
 
+    std::vector<Observateur<N>*> observateurs;
+
 public:
     Optimiseur(FonctionObjectif<N>& func, PasDeplacement<N>& Pas, double e, int max_it)
         : f(func), Pas(Pas), epsilon(e), max_iters(max_it) {}
@@ -21,25 +30,34 @@ public:
     virtual ~Optimiseur() = default;
     virtual std::string getNom() const = 0;
 
+    void ajouterObservateur(Observateur<N>* obs)
+    {
+        observateurs.push_back(obs);
+    }
+
+    void notifier(const Evenement<N>& event)
+    {
+        for (auto* obs : observateurs)
+            obs->onNotify(event);
+    }
+
     void optimiser(Vecteur<N>& x_depart)
     {
-        Logger<N> logger;
-        logger.start(this->getNom(), x_depart, f, max_iters);
+        notifier(EvenementDemarrage<N>(x, f, max_iters));
 
         auto x = x_depart;
 
         for (int k = 0; k <= max_iters; ++k)
         {
             double fx = f.evaluer(x);
-
             auto grad = f.calculerGradient(x);
             double grad_norm = grad.calculNorm();
 
-            logger.log(k, fx, grad_norm, x);
+            notifier(EvenementIteration<N>(k, x, fx, grad_norm));
 
             if (grad_norm < epsilon)
             {
-                logger.end(x, fx, true);
+                notifier(EvenementTerminaison<N>(x, fx, true));
                 return;
             }
 
@@ -47,7 +65,7 @@ public:
 
             x = x + d * Pas.getPas();
         }
-        logger.end(x, f.evaluer(x), false);
+        notifier(EvenementTerminaison<N>(x, f.evaluer(x), false));
     }
     virtual Vecteur<N> calculerDirection(const Vecteur<N>& x) const = 0;
 };
