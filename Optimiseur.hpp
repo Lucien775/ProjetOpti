@@ -18,10 +18,12 @@ public:
         : f(func), alpha(a), epsilon(e), max_iters(max_it) {}
 
     virtual ~Optimiseur() = default;
+    virtual std::string getNom() const = 0;
+
     void optimiser(Vecteur<N>& x_depart)
     {
         Logger<N> logger;
-        logger.start(*this, x_depart, f, max_iters);
+        logger.start(this->getNom(), x_depart, f, max_iters);
 
         auto x = x_depart;
 
@@ -70,6 +72,9 @@ public:
     {
         std::cout << "Descente de Gradient (Pas Fixe)" << std::endl;
     }
+    std::string getNom() const override {
+        return "méthode descente de gradient pas fixe";
+    }
 };
 
 template <size_t N>
@@ -91,6 +96,9 @@ public:
     void afficher() const
     {
         std::cout << "Plus forte pente" << std::endl;
+    }
+    std::string getNom() const override {
+        return "méthode de la plus forte pente";
     }
 };
 

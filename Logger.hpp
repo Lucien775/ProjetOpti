@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "function.hpp"
-#include "Optimiseur.hpp"
+//#include "Optimiseur.hpp"
 
 template <size_t N>
 class Logger
@@ -13,21 +14,22 @@ public:
 	Logger() = default;
 	~Logger() = default;
 
-	void start(const Optimiseur<N>& opt, const Vecteur<N>& x0, const FonctionObjectif<N>& f, int max_iter) const
+	void start(const std::string nomAlgo, const Vecteur<N>& x0, const FonctionObjectif<N>& f, int max_iter) const
 	{
-		std::cout << "---\n---" << opt.afficher()<<"\n---" << std::endl;
+		std::cout << "---\n---" <<  nomAlgo <<"\n---" << std::endl;
 
 		std::cout << "\nPoint initial : (";
 		for (size_t i = 0; i < x0.size() - 1; ++i)
 			std::cout << x0[i] << ", ";
 		std::cout << x0[x0.size() - 1] << ")\n" << std::endl;
 
-		std::cout << "Fonction : " << f.afficher_f() << std::endl;
+		std::cout << "Fonction : " << std::endl;
+		f.afficher_f();
 
-		std::cout << "Méthode : " << opt.afficher() << std::endl;
+		std::cout << "Méthode : " << nomAlgo << std::endl;
 
-		cout << "Max-iters : 100\n" << std::endl;
-        cout << "Iter.    Obj.        ||Grad||     Point" << std::endl;
+		std::cout << "Max-iters : 100\n" << std::endl;
+        std::cout << "Iter.    Obj.        ||Grad||     Point" << std::endl;
 	}
 
 	void log(int k, double fx, double grad_norm, const Vecteur<N>& x) const
