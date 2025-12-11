@@ -17,8 +17,16 @@ class PasFixe : public PasDeplacement<N> {
     PasFixe(double alpha){
         this->alpha = alpha;
     }
-    double calculerPas(const Vecteur<N>& xk, const Vecteur<N>& dk, const Vecteur<N>& gradxk, const FonctionObjective<N>& f) {
+    double calculerPas(const Vecteur<N>& xk, const Vecteur<N>& dk, const Vecteur<N>& gradxk, const FonctionObjective<N>& f) const override{
         return alpha;
     }
     ~PasFixe() = default;
+
+
+    //getter 
+
+    const double getPas() const {
+
+        return alpha;
+    }
 };
