@@ -1,6 +1,6 @@
 #ifndef ALGO
 #define ALGO 
-
+#include "Pas.hpp"
 #include <stdlib.h>
 #include "Logger.hpp"
 
@@ -8,8 +8,9 @@ template <size_t N>
 class Optimiseur
 {
 protected: 
+
     FonctionObjectif<N>& f;
-    double alpha;
+    PasFixe alpha;
     double epsilon;
     int max_iters;
 
