@@ -8,6 +8,8 @@
 #include "io/evenement/EvenementIteration.hpp"
 #include "io/evenement/EvenementIteration.hpp"
 #include "io/evenement/EvenementTerminaision.hpp"
+#include "io/observateur/LoggerConsole.hpp"
+
 
 
 template <size_t N>

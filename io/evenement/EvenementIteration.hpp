@@ -4,7 +4,6 @@
 #include "../Evenement.hpp"
 
 template <size_t N>
-template <size_t N>
 class EvenementIteration : public Evenement<N> {
 public:
     EvenementIteration(const int& k, const double& grad_norm, const double& fx, const Vecteur<N>& x) 

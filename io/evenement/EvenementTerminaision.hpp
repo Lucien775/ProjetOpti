@@ -4,14 +4,17 @@
 #include "../Evenement.hpp"
 
 template <size_t N>
-class EvenementTerminaison<N> : public Evenement<N>
-{
+class EvenementTerminaison : public Evenement<N> {
+public:
+    EvenementTerminaison(const Vecteur<N>& x_final, const double& f_final, const bool& converged) 
+    {
+        this->x_final = x_final;
+        this->f_final = f_final;
+        this->converged = converged;
+    }
 	Vecteur<N> x_final;
 	double f_final;
 	bool converged;
-public:
-	EvenementDemarrage(const Vecteur<N>& x_final, const double& f_final, const bool& converged)
-		: x_final(x_final), f_final(f_final), converged(converged) {}
 };
 
 
