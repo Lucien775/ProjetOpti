@@ -1,0 +1,9 @@
+# Fichier de config VSCODE
+
+.vscode/
+
+#Fichiers ignorés pour pas polluer 
+
+*.o
+
+main
