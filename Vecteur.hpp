@@ -25,7 +25,7 @@ public :
     Vecteur<N> operator+(const Vecteur& v2){
 
         Vecteur new_vec;
-        for(int i = 0; i<N; i++){
+        for(size_t i = 0; i<N; i++){
             new_vec[i] = (*this)[i] + v2[i];
         }
         return new_vec;
@@ -33,7 +33,7 @@ public :
 
     Vecteur<N> operator-(const Vecteur& v2){
         Vecteur new_vec;
-        for(int i = 0; i<N; i++){
+        for(size_t i = 0; i<N; i++){
             new_vec[i] = (*this)[i] - v2[i];
         }
         return new_vec;
@@ -41,7 +41,7 @@ public :
 
     Vecteur<N> operator*(const double& k){
         Vecteur new_vec;
-        for(int i = 0; i<N; i++){
+        for(size_t i = 0; i<N; i++){
             new_vec[i] = (*this)[i] * k;
         }
         return new_vec;
