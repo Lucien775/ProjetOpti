@@ -4,8 +4,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
+#include <iostream>
 #include "function.hpp"
 //#include "Optimiseur.hpp"
+
 
 template <size_t N>
 class Logger
@@ -37,14 +40,12 @@ public:
 		if (k % 10 == 0)
 		{
 			std::cout << k << "    ";
-			std::cout.precision(5);
-			std::cout << fx << "    ";
-			std::cout << scientific << grad_norm << "    ";
+			std::cout << setprecision(5)<< fixed << fx << "    ";
+			std::cout << setprecision(2)<< scientific << grad_norm << "    ";
 
 			std::cout << "(";
-            std::cout.precision(2);
             for (size_t i = 0; i < x.size(); i++)
-                std::cout << x[i] << (i + 1 < x.size() ? ", " : "");
+                std::cout << setprecision(2) << fixed <<x[i] << (i + 1 < x.size() ? ", " : "");
             std::cout << ")" << std::endl;
 		}
 	}
@@ -60,11 +61,11 @@ public:
 
         std::cout << "Solution : (";
         for (size_t i = 0; i < x_final.size() - 1; i++)
-            std::cout << x_final[i]<< ", ";
-        std::cout << x_final[x_final.size() - 1];
+            std::cout << setprecision(2) << fixed << x_final[i]<< ", ";
+        std::cout << setprecision(2) << fixed << x_final[x_final.size() - 1];
         std::cout << ")\n";
 
-        std::cout << "Valeur : " << f_final << endl;
+        std::cout << "Valeur : " << setprecision(2) << fixed << f_final << endl;
     }
 };
 

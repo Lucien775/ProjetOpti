@@ -1,5 +1,5 @@
 CPP_SOURCES = main.cpp  
-HEADERS = $(wildcard *.hpp)
+HEADERS = $(wildcard *.hpp io/evenement/* io/observateur/* io/*)
 OBJ = $(CPP_SOURCES:.cpp=.o)
 
 FLAGS = -std=c++17 -Wall 
