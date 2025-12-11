@@ -15,7 +15,7 @@ public:
     }
 	std::string nomAlgo;
 	Vecteur<N> x0;
-	FonctionObjectif<N> f;
+	FonctionObjectif<N>& f;
 	int max_iter;
 };
 

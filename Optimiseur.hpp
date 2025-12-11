@@ -44,7 +44,7 @@ public:
 
     void optimiser(Vecteur<N>& x_depart)
     {
-        notifier(EvenementDemarrage<N>(x, f, max_iters));
+        notifier(EvenementDemarrage<N>(this->getNom() ,x_depart, f, max_iters));
 
         auto x = x_depart;
 
@@ -54,7 +54,7 @@ public:
             auto grad = f.calculerGradient(x);
             double grad_norm = grad.calculNorm();
 
-            notifier(EvenementIteration<N>(k, x, fx, grad_norm));
+            notifier(EvenementIteration<N>(k, grad_norm, fx, x));
 
             if (grad_norm < epsilon)
             {
