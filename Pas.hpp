@@ -8,3 +8,17 @@ public:
 
     virtual ~PasDeplacement() = default;
 };
+
+
+template <size_t N>
+class PasFixe : public PasDeplacement<N> {
+    public : 
+    double alpha;
+    PasFixe(double alpha){
+        this->alpha = alpha;
+    }
+    double calculerPas(const Vecteur<N>& xk, const Vecteur<N>& dk, const Vecteur<N>& gradxk, const FonctionObjective<N>& f) {
+        return alpha;
+    }
+    ~PasFixe() = default;
+};
