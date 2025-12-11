@@ -45,7 +45,7 @@ public:
 
             auto d = calculerDirection(x);
 
-            x = x + d * Pas;
+            x = x + d * Pas.getPas();
         }
         logger.end(x, f.evaluer(x), false);
     }
