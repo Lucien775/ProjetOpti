@@ -1,19 +1,26 @@
 #ifndef ITTERATION
 #define ITTERATION
 
-#include "../Evenement.h"
+#include "../Evenement.hpp"
 
 template <size_t N>
-class EvenementIteration : public Evenement<N>
-{
-	int k;
-	double fx;
-	double grad_norm;
-	Vecteur<N> x;
+template <size_t N>
+class EvenementIteration : public Evenement<N> {
 public:
-	EvenementDemarrage(const int& k, const double& fx, const double& grad_norm, const Vecteur<N>& x)
-		: k(k), fx(fx), grad_norm(grad_norm), x(x) {}
+    EvenementIteration(const int& k, const double& grad_norm, const double& fx, const Vecteur<N>& x) 
+    {
+        this->iteration = k;
+        this->valeur_f = fx;
+        this->grad_norm = grad_norm;
+        this->point = x;
+    }
+
+    int iteration;
+    double valeur_f;
+    double grad_norm;
+    Vecteur<N> point;
 };
+
 
 
 #endif

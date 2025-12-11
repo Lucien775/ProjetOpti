@@ -1,10 +1,10 @@
 #ifndef FIN
 #define FIN
 
-#include "../Evenement.h"
+#include "../Evenement.hpp"
 
 template <size_t N>
-class EvenementTerminaison : public Evenement<N>
+class EvenementTerminaison<N> : public Evenement<N>
 {
 	Vecteur<N> x_final;
 	double f_final;

@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <vector>
 #include "Pas.hpp"
-#include "Logger.hpp"
 #include "io/evenement/Demarrage.hpp"
 #include "io/evenement/Demarrage.hpp"
 #include "io/evenement/EvenementIteration.hpp"
